@@ -1,0 +1,18 @@
+:root {
+   --primary: #604c39;   /* Rich brown (main piggy bank) */
+  --accent: #c09d3e;    /* Deep gold (coin in the pig's side) */
+  --light: #fcf6ef;     /* Soft parchment (logo background) */
+  --white: #fff;        /* Pure white, for strong contrast */
+  --gray: #a0917c;  /* Muted gray (text and secondary elements) */
+}
+
+/* Reset and base styles */
+body {
+  font-family: 'Montserrat', Arial, sans-serif;
+  background: var(--light);
+  color: var(--accent);
+  margin: 0;
+}
+
+
+

@@ -1,0 +1,317 @@
+:root {
+  --accent-primary: #c09d3e;
+  --accent-secondary: #a07d30;
+  --bg-primary: #fcf6ef;
+  --bg-secondary: #fff8e1;
+  --text-primary: #604c39;
+  --text-secondary: #4a3b23;
+  --border-color: #c09d3e;
+  --shadow-color: rgba(96, 76, 57, 0.15);
+  --positive-green: #28a745;
+  --negative-red: #dc3545;
+}
+
+/* Dashboard Grid/Containers */
+.dashboard {
+  max-width: 1200px;
+  margin: auto;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  padding: 20px 5vw;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* User Section */
+.dash-users {
+  background: var(--bg-secondary);
+  border-radius: 10px;
+  box-shadow: 0 3px 10px var(--shadow-color);
+  padding: 16px;
+  margin-bottom: 24px;
+}
+
+.dash-users h3 {
+  font-weight: 700;
+  color: var(--accent-primary);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.person-select,
+.dash-users select {
+  margin: 12px 0 20px 0;
+  padding: 8px 12px;
+  font-size: 1rem;
+  border-radius: 6px;
+  border: 2px solid var(--accent-primary);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  min-width: 200px;
+}
+
+.add-user-btn {
+  background: var(--accent-primary);
+  border: none;
+  padding: 10px 18px;
+  color: white;
+  border-radius: 6px;
+  font-weight: 700;
+  cursor: pointer;
+  margin-left: 16px;
+  transition: background 0.2s;
+}
+.add-user-btn:hover {
+  background-color: var(--accent-secondary);
+}
+
+.user-cards {
+  display: flex;
+  gap: 18px;
+  flex-wrap: wrap;
+  margin: 12px 0;
+}
+.ucard {
+  background: var(--bg-secondary);
+  padding: 12px 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px var(--shadow-color);
+  transition: box-shadow 0.2s, background 0.2s;
+  width: 170px;
+  cursor: pointer;
+  position: relative;
+}
+.ucard.current {
+  background: var(--accent-primary);
+  color: white;
+}
+.ucard span {
+  font-weight: 600;
+  font-size: 1.08rem;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.ucard small {
+  font-size: 0.88rem;
+  opacity: 0.8;
+  margin: 2px 0 4px 0;
+}
+.ucard button {
+  background: transparent;
+  border: none;
+  color: var(--negative-red);
+  position: absolute;
+  top: 10px; right: 10px;
+  cursor: pointer;
+  font-size: 1.1rem;
+}
+
+.user-form {
+  display: flex;
+  gap: 10px;
+  background: var(--bg-primary);
+  border-radius: 8px;
+  padding: 10px 15px;
+  margin-top: 14px;
+  box-shadow: 0 1px 5px var(--shadow-color);
+}
+.user-form input {
+  flex: 1;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  padding: 8px 10px;
+  font-size: 1rem;
+  color: var(--text-primary);
+}
+.user-form button {
+  background: var(--accent-primary);
+  border: none;
+  color: white;
+  font-weight: 600;
+  margin-left: 8px;
+  border-radius: 6px;
+  padding: 8px 15px;
+  cursor: pointer;
+}
+
+/* Summary Grid */
+.dash-sumgrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 18px;
+  margin-bottom: 24px;
+}
+.sum-card {
+  background: var(--bg-secondary);
+  border-radius: 12px;
+  box-shadow: 0 3px 12px var(--shadow-color);
+  padding: 22px;
+  text-align: center;
+}
+.sum-card h4 {
+  margin-bottom: 6px;
+  color: var(--accent-primary);
+  font-size: 1.1rem;
+}
+.sum-card.income { color: var(--positive-green);}
+.sum-card.expense { color: var(--negative-red);}
+.sum-card.balance { font-weight: 700;}
+.good { color: var(--positive-green);}
+.bad { color: var(--negative-red);}
+.sum-card div { font-size: 2rem; font-weight: 700; }
+
+/* Budget/Alert/Inputs */
+.dash-budget {
+  background: var(--bg-secondary);
+  border-radius: 10px;
+  box-shadow: 0 2px 12px var(--shadow-color);
+  padding: 24px;
+  margin-bottom: 24px;
+}
+.dash-budget h3 { color: var(--accent-primary); margin-bottom: 10px;}
+.dash-budget table { width: 100%; border-collapse: collapse; }
+.dash-budget th, .dash-budget td { text-align: left; padding: 10px; border-bottom: 1px solid var(--border-color);}
+.dash-budget input { background: var(--bg-primary); color: var(--text-primary); border-radius: 6px; border: 1px solid var(--border-color); padding: 7px 10px;}
+tr.alert, .budget-card.over-budget { background: #ffe4e9; color: var(--negative-red);}
+.alert-banner {
+  padding: 8px 12px;
+  background: #ffe4e9;
+  border: 1px solid var(--negative-red);
+  color: var(--negative-red);
+  font-weight: 700;
+  margin-bottom: 10px;
+  border-radius: 8px;
+}
+
+/* Chart */
+.dash-charts {
+  background: var(--bg-secondary);
+  border-radius: 12px;
+  box-shadow: 0 2px 12px var(--shadow-color);
+  padding: 18px;
+  margin-bottom: 24px;
+}
+.dash-charts h3 {
+  color: var(--accent-primary);
+  margin: 0 0 13px 0;
+  text-align: center;
+}
+
+/* Add/Edit Form */
+.dash-form {
+  width: 100%;
+  max-width: 700px;
+  margin: 0 auto 24px auto;
+  display: grid;
+  gap: 13px;
+  background: var(--bg-secondary);
+  padding: 24px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px var(--shadow-color);
+}
+.dash-form h3 {
+  margin-bottom: 12px;
+  color: var(--accent-primary);
+  font-weight: 700;
+}
+.dash-form select, .dash-form input { 
+  border: 1px solid var(--border-color); 
+  border-radius: 6px; 
+  font-size: 1rem; 
+  padding: 9px; 
+  background: var(--bg-primary);
+  color: var(--text-primary);}
+.dash-form button {
+  background: var(--accent-primary);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: 700;
+  padding: 10px 18px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.dash-form button:hover { 
+  background: var(--accent-secondary);
+}
+.dash-form .cancel-btn {
+  background: #868686;
+  margin-left: 8px;
+}
+.dash-form .cancel-btn:hover { background: #727272;}
+
+.dash-filters {
+  background: var(--bg-secondary);
+  border-radius: 10px;
+  box-shadow: 0 2px 12px var(--shadow-color);
+  padding: 18px;
+  margin: 0 auto 24px auto;
+  max-width: 700px;
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.dash-filters h4 {
+  color: var(--accent-primary);
+  margin: 0 8px 0 0;
+  font-weight: 700;
+}
+.dash-filters select, .dash-filters input {
+  border: 1px solid var(--border-color); 
+  border-radius: 8px;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  padding: 7px 10px;
+  font-size: 1rem;
+}
+
+/* Transaction Table */
+.dash-txns {
+  background: var(--bg-secondary);
+  border-radius: 10px;
+  box-shadow: 0 2px 12px var(--shadow-color);
+  padding: 18px;
+  margin-bottom: 32px;
+  overflow-x: auto;
+}
+.dash-txns h3 {
+  color: var(--accent-primary);
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+.txn-table { width: 100%; border-collapse: collapse;}
+.txn-table th, .txn-table td { padding: 12px; border-bottom: 1px solid var(--border-color);text-align: left;}
+.txn-row.income { background: #e2faef;}
+.txn-row.expense { background: #fae2e2;}
+.txn-table th { background: var(--bg-primary); color: var(--accent-primary); font-weight: 700;}
+.type.income { color: var(--positive-green);}
+.type.expense { color: var(--negative-red);}
+.amount { font-weight: 700;}
+.actions button {
+  background: transparent;
+  border: none;
+  margin-right: 7px;
+  cursor: pointer;
+  font-size: 1.2rem;
+  color: var(--accent-primary);
+  transition: color 0.2s;
+}
+.actions button:hover { color: var(--accent-secondary); }
+.no-data,.note { padding: 16px; text-align: center; color: var(--text-secondary);font-style:italic; }
+
+/* Responsive adjustments */
+@media (max-width: 900px) {
+  .dashboard { padding: 18px 2vw;}
+  .dash-sumgrid { grid-template-columns: 1fr;}
+  .dash-form, .dash-filters, .dash-txns { padding: 12px;}
+  .user-cards { flex-direction: column;}
+}
+@media (max-width: 480px) {
+  .dashboard { padding: 10px 1vw;}
+  .dash-users, .dash-charts, .dash-budget, .dash-form, .dash-filters, .dash-txns { padding: 8px;}
+  .ucard { width: 100%;}
+}
