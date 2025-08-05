@@ -1,4 +1,4 @@
-Certainly! Here’s a professional, clear, and SRS-aligned **README.md** template for your Budget Buddy GitHub repository:
+
 
 # Budget Buddy
 
@@ -117,5 +117,4 @@ Pull requests are welcome! For major changes, open an issue first to discuss wha
 - Logo designed using logo-makr.com and modified for open use.
 - Powered by React, Chart.js, and open source.
 
-Feel free to personalize the screenshot, roadmap, and username in the git URL.  
-This README reflects your SRS requirements, ensures new users and reviewers understand the project, and helps anyone get started or contribute!
+
