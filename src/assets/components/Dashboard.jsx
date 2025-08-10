@@ -8,7 +8,6 @@ import {
   FaUser,
   FaFilter,
 } from "react-icons/fa";
-// Add Chart.js required imports
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -18,18 +17,10 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
-
-// Register ChartJS components
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend
-);
-
 import "./Dashboard.css";
+
+// Register Chart.js once at module scope
+ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
 const STORAGE_KEY = "bb_dashboard";
 const DEFAULT_CATEGORIES = [
@@ -42,16 +33,15 @@ const DEFAULT_CATEGORIES = [
   "Others",
 ];
 
-// ---- Initial Data Structure ----
 const initialData = {
   users: [{ id: 1, name: "You", email: "" }],
   currentUser: 1,
   transactions: [],
-  budgets: {}, // key: `${userId}-${cat}`, value: limit
+  budgets: {}, // key: `${userId}-${cat}`, value: number
 };
 
 const Dashboard = () => {
-  // -------- STATE
+  // State
   const [data, setData] = useState(() => {
     try {
       const d = localStorage.getItem(STORAGE_KEY);
@@ -68,7 +58,7 @@ const Dashboard = () => {
     category: DEFAULT_CATEGORIES[0],
     date: new Date().toISOString().slice(0, 10),
     description: "",
-    userId: data.currentUser,
+    userId: typeof data.currentUser === "number" ? data.currentUser : 1,
   });
 
   const [userForm, setUserForm] = useState({ name: "", email: "" });
@@ -82,63 +72,92 @@ const Dashboard = () => {
     dateTo: "",
   });
 
-  // -------- EFFECTS: LocalStorage + Current User Change
+  // Persist to localStorage
   useEffect(() => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
   }, [data]);
 
+  // Ensure currentUser remains valid if users list changes
+  useEffect(() => {
+    const users = data.users;
+    if (!users.some((u) => u.id === data.currentUser)) {
+      const fallback = users.length ? users[0].id : 1;
+      setData((d) => ({ ...d, currentUser: fallback }));
+    }
+  }, [data.users]);
+
+  // Keep txnForm userId synced and reset filters on user switch
   useEffect(() => {
     setTxnForm((f) => ({ ...f, userId: data.currentUser }));
+    setFilter((f) => ({ ...f, type: "all", category: "all" }));
+    setEditMode(false);
   }, [data.currentUser]);
 
-  // --------- Derived Data
+  // Derived
   const users = data.users;
-  const userTxns = data.transactions.filter(
-    (t) => t.userId === data.currentUser
+  const userTxns = useMemo(
+    () => data.transactions.filter((t) => t.userId === data.currentUser),
+    [data.transactions, data.currentUser]
   );
 
   const filteredTxns = useMemo(() => {
     return userTxns.filter((txn) => {
       if (filter.type !== "all" && txn.type !== filter.type) return false;
-      if (filter.category !== "all" && txn.category !== filter.category)
-        return false;
-      if (filter.dateFrom && txn.date < filter.dateFrom) return false;
-      if (filter.dateTo && txn.date > filter.dateTo) return false;
+      if (filter.category !== "all" && txn.category !== filter.category) return false;
+      if (filter.dateFrom && new Date(txn.date) < new Date(filter.dateFrom)) return false;
+      if (filter.dateTo && new Date(txn.date) > new Date(filter.dateTo)) return false;
       return true;
     });
   }, [userTxns, filter]);
 
-  const totalIncome = userTxns
-    .filter((t) => t.type === "income")
-    .reduce((sum, t) => sum + t.amount, 0);
-  const totalExpense = userTxns
-    .filter((t) => t.type === "expense")
-    .reduce((sum, t) => sum + t.amount, 0);
+  const totalIncome = useMemo(
+    () =>
+      userTxns
+        .filter((t) => t.type === "income")
+        .reduce((s, t) => s + Number(t.amount || 0), 0),
+    [userTxns]
+  );
+  const totalExpense = useMemo(
+    () =>
+      userTxns
+        .filter((t) => t.type === "expense")
+        .reduce((s, t) => s + Number(t.amount || 0), 0),
+    [userTxns]
+  );
   const balance = totalIncome - totalExpense;
 
-  // --------- BUDGET ALERT
+  // Budget alert calculation
   useEffect(() => {
-    // Alert categories where spending > budget
     const spentByCat = {};
     userTxns.forEach((t) => {
-      if (t.type === "expense")
-        spentByCat[t.category] = (spentByCat[t.category] || 0) + t.amount;
+      if (t.type === "expense") {
+        const amt = Number(t.amount || 0);
+        spentByCat[t.category] = (spentByCat[t.category] || 0) + amt;
+      }
     });
     const over = [];
     Object.entries(data.budgets).forEach(([key, limit]) => {
-      const [uid, cat] = key.split("-");
-      if (Number(uid) === data.currentUser && limit && spentByCat[cat] > limit)
+      const [uidStr, cat] = key.split("-");
+      const uid = Number(uidStr);
+      if (
+        uid === data.currentUser &&
+        Number.isFinite(limit) &&
+        (spentByCat[cat] || 0) > Number(limit)
+      ) {
         over.push(cat);
+      }
     });
     setAlertCategories(over);
   }, [data.budgets, data.currentUser, userTxns]);
 
-  // --------- CHART DATA
+  // Chart data
   const chartData = useMemo(() => {
     const catSum = {};
     userTxns.forEach((t) => {
-      if (t.type === "expense")
-        catSum[t.category] = (catSum[t.category] || 0) + t.amount;
+      if (t.type === "expense") {
+        const amt = Number(t.amount || 0);
+        catSum[t.category] = (catSum[t.category] || 0) + amt;
+      }
     });
     return {
       labels: Object.keys(catSum),
@@ -152,43 +171,41 @@ const Dashboard = () => {
     };
   }, [userTxns]);
 
-  // -------- HANDLERS
+  // Handlers
   const handleTxnForm = (e) =>
     setTxnForm((f) => ({ ...f, [e.target.name]: e.target.value }));
 
   const submitTxn = (e) => {
     e.preventDefault();
-    if (!txnForm.amount || isNaN(txnForm.amount) || Number(txnForm.amount) <= 0)
-      return alert("Enter a valid amount.");
-    if (!txnForm.type || !txnForm.category) return alert("Pick valid details!");
-    if (!txnForm.date) return alert("Select a date.");
-    // Edit or create
+    if (!txnForm.amount || isNaN(txnForm.amount) || Number(txnForm.amount) <= 0) {
+      alert("Enter a valid amount.");
+      return;
+    }
+    if (!txnForm.type || !txnForm.category) {
+      alert("Pick valid details!");
+      return;
+    }
+    if (!txnForm.date) {
+      alert("Select a date.");
+      return;
+    }
+    const base = {
+      ...txnForm,
+      amount: Number(txnForm.amount),
+      userId: data.currentUser,
+    };
     if (editMode) {
       setData((d) => ({
         ...d,
         transactions: d.transactions.map((txn) =>
-          txn.id === txnForm.id
-            ? {
-                ...txnForm,
-                amount: Number(txnForm.amount),
-                userId: data.currentUser,
-              }
-            : txn
+          txn.id === txnForm.id ? { ...base } : txn
         ),
       }));
       setEditMode(false);
     } else {
       setData((d) => ({
         ...d,
-        transactions: [
-          ...d.transactions,
-          {
-            ...txnForm,
-            amount: Number(txnForm.amount),
-            userId: data.currentUser,
-            id: Date.now(),
-          },
-        ],
+        transactions: [...d.transactions, { ...base, id: Date.now() }],
       }));
     }
     setTxnForm({
@@ -208,27 +225,29 @@ const Dashboard = () => {
   };
 
   const delTxn = (id) => {
-    if (window.confirm("Delete this transaction?"))
+    if (window.confirm("Delete this transaction?")) {
       setData((d) => ({
         ...d,
         transactions: d.transactions.filter((txn) => txn.id !== id),
       }));
+    }
   };
 
-  // Add user
   const submitUser = (e) => {
     e.preventDefault();
-    if (!userForm.name.trim()) return alert("Enter a name!");
+    if (!userForm.name.trim()) {
+      alert("Enter a name!");
+      return;
+    }
+    const newUser = {
+      id: Date.now(),
+      name: userForm.name.trim(),
+      email: userForm.email.trim(),
+    };
     setData((d) => ({
       ...d,
-      users: [
-        ...d.users,
-        {
-          id: Date.now(),
-          name: userForm.name.trim(),
-          email: userForm.email.trim(),
-        },
-      ],
+      users: [...d.users, newUser],
+      currentUser: newUser.id,
     }));
     setUserForm({ name: "", email: "" });
     setShowUserForm(false);
@@ -237,32 +256,39 @@ const Dashboard = () => {
   const switchUser = (id) => setData((d) => ({ ...d, currentUser: id }));
 
   const delUser = (id) => {
-    if (users.length < 2) return alert("At least one user must remain.");
+    if (data.users.length < 2) {
+      alert("At least one user must remain.");
+      return;
+    }
     if (window.confirm("Delete this user and ALL their transactions?")) {
-      setData((d) => ({
-        ...d,
-        users: d.users.filter((u) => u.id !== id),
-        transactions: d.transactions.filter((t) => t.userId !== id),
-        currentUser: d.users.find((u) => u.id !== id)?.id || 1,
-      }));
+      setData((d) => {
+        const users = d.users.filter((u) => u.id !== id);
+        const transactions = d.transactions.filter((t) => t.userId !== id);
+        const nextCurrent = users.length ? users[0].id : 1;
+        return { ...d, users, transactions, currentUser: nextCurrent };
+      });
     }
   };
 
-  // Budget per user/category
   const handleBudgetChange = (cat, val) => {
-    setData((d) => ({
-      ...d,
-      budgets: {
-        ...d.budgets,
-        [`${data.currentUser}-${cat}`]: val ? Number(val) : undefined,
-      },
-    }));
+    setData((d) => {
+      const key = `${d.currentUser}-${cat}`;
+      const budgets = { ...d.budgets };
+      const num = Number(val);
+      if (!val || Number.isNaN(num)) {
+        delete budgets[key];
+      } else {
+        budgets[key] = num;
+      }
+      return { ...d, budgets };
+    });
   };
 
-  // ---- Get per-person/cat budget
-  const getBudget = (cat) => data.budgets[`${data.currentUser}-${cat}`] || "";
+  const getBudget = (cat) => {
+    const v = data.budgets[`${data.currentUser}-${cat}`];
+    return Number.isFinite(v) ? v : "";
+  };
 
-  // ---- RENDER
   return (
     <div className="dashboard">
       {/* User Management */}
@@ -291,13 +317,20 @@ const Dashboard = () => {
             <div
               key={u.id}
               className={`ucard${data.currentUser === u.id ? " current" : ""}`}
+              onClick={() => switchUser(u.id)}
             >
               <span>
                 <FaUser /> {u.name}
               </span>
               <small>{u.email}</small>
               {users.length > 1 && (
-                <button onClick={() => delUser(u.id)} title="Delete user">
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    delUser(u.id);
+                  }}
+                  title="Delete user"
+                >
                   <FaTrash />
                 </button>
               )}
@@ -369,7 +402,7 @@ const Dashboard = () => {
             {DEFAULT_CATEGORIES.map((cat) => {
               const spent = userTxns
                 .filter((t) => t.category === cat && t.type === "expense")
-                .reduce((s, t) => s + t.amount, 0);
+                .reduce((s, t) => s + Number(t.amount || 0), 0);
               return (
                 <tr
                   key={cat}
@@ -410,7 +443,7 @@ const Dashboard = () => {
         )}
       </div>
 
-      {/* Trans Form and Filter */}
+      {/* Add/Edit Form */}
       <form className="dash-form" onSubmit={submitTxn}>
         <h3>{editMode ? "Edit" : "Add"} Transaction</h3>
         <select name="type" value={txnForm.type} onChange={handleTxnForm}>
@@ -448,29 +481,32 @@ const Dashboard = () => {
           value={txnForm.description}
           onChange={handleTxnForm}
         />
-        <button type="submit">{editMode ? "Update" : "Add"}</button>
-        {editMode && (
-          <button
-            type="button"
-            onClick={() => {
-              setEditMode(false);
-              setTxnForm({
-                id: null,
-                type: "expense",
-                amount: "",
-                category: DEFAULT_CATEGORIES[0],
-                date: new Date().toISOString().slice(0, 10),
-                description: "",
-                userId: data.currentUser,
-              });
-            }}
-          >
-            Cancel
-          </button>
-        )}
+        <div>
+          <button type="submit">{editMode ? "Update" : "Add"}</button>
+          {editMode && (
+            <button
+              type="button"
+              className="cancel-btn"
+              onClick={() => {
+                setEditMode(false);
+                setTxnForm({
+                  id: null,
+                  type: "expense",
+                  amount: "",
+                  category: DEFAULT_CATEGORIES[0],
+                  date: new Date().toISOString().slice(0, 10),
+                  description: "",
+                  userId: data.currentUser,
+                });
+              }}
+            >
+              Cancel
+            </button>
+          )}
+        </div>
       </form>
 
-      {/* Filter Controls */}
+      {/* Filters */}
       <div className="dash-filters">
         <h4>
           <FaFilter /> Filter
@@ -508,7 +544,7 @@ const Dashboard = () => {
         />
       </div>
 
-      {/* Transaction List */}
+      {/* Transactions */}
       <div className="dash-txns">
         <h3>Transactions</h3>
         {filteredTxns.length === 0 ? (
@@ -527,13 +563,13 @@ const Dashboard = () => {
             </thead>
             <tbody>
               {filteredTxns.map((txn) => (
-                <tr key={txn.id} className={txn.type}>
+                <tr key={txn.id} className={`txn-row ${txn.type}`}>
                   <td>{txn.date}</td>
-                  <td>{txn.type}</td>
+                  <td className={`type ${txn.type}`}>{txn.type}</td>
                   <td>{txn.category}</td>
                   <td>{txn.description || "-"}</td>
-                  <td>₹{txn.amount.toFixed(2)}</td>
-                  <td>
+                  <td className="amount">₹{Number(txn.amount).toFixed(2)}</td>
+                  <td className="actions">
                     <button onClick={() => editTxn(txn)} title="Edit">
                       <FaEdit />
                     </button>
