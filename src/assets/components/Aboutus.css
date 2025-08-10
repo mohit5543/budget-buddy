@@ -1,7 +1,7 @@
 .aboutus-page {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #fcf6ef;
-  color: #604c39;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -41,12 +41,12 @@
   font-size: 1.15rem;
   line-height: 1.7;
   margin-bottom: 18px;
-  color: #4a3b23;
+  color: var(--text-secondary);
 }
 
 /* Testimonials Section */
 .testimonials-section {
-  background: #fff8e1;
+  background: var(--bg-secondary);
   border-radius: 12px;
   padding: 50px 5vw;
   width: 100%;
@@ -56,7 +56,7 @@
   font-weight: 700;
   font-size: 2rem;
   margin-bottom: 24px;
-  color: #604c39;
+  color: var(--text-primary);
   text-align: center;
 }
 
@@ -72,13 +72,13 @@
 /* Individual Testimonials */
 .testimonial {
   min-width: 280px;
-  background-color: #fdf6dc;
-  border-left: 5px solid #c09d3e;
+  background-color: var(--bg-secondary);
+  border-left: 5px solid var(--accent-primary);
   padding: 20px 24px;
   border-radius: 10px;
-  box-shadow: 0 1px 6px rgba(96, 76, 57, 0.08);
+  box-shadow: 0 1px 6px var(--shadow-color);
   font-style: italic;
-  color: #5a441c;
+  color: var(--text-secondary);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -91,7 +91,7 @@
   font-weight: 700;
   font-size: 0.9rem;
   text-align: right;
-  color: #604c39;
+  color: var(--text-primary);
 }
 
 /* Testimonial Form */
@@ -108,11 +108,13 @@
   font-weight: 600;
   text-align: center;
   margin-bottom: 12px;
-  color: #604c39;
+  color: var(--text-primary);
 }
 .testimonial-input,
 .testimonial-textarea {
-  border: 1px solid #c09d3e;
+  border: 1px solid var(--border-color);
+  background-color: var(--bg-secondary);
+  color: var(--text-primary);
   border-radius: 8px;
   padding: 10px;
   font-size: 1rem;
@@ -124,7 +126,7 @@
 }
 .testimonial-submit {
   border-radius: 25px;
-  background-color: #c09d3e;
+  background-color: var(--accent-primary);
   border: none;
   padding: 11px 22px;
   font-weight: 700;
@@ -135,9 +137,8 @@
   align-self: center;
 }
 .testimonial-submit:hover {
-  background-color: #a07d30;
+  background-color: var(--accent-secondary);
 }
-
 
 /* Responsive */
 @media (max-width: 768px) {

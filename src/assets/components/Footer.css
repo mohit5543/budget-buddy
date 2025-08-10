@@ -2,7 +2,6 @@
   background: var(--bg-secondary);
   color: var(--text-primary);
   padding: 60px 5vw 20px;
-  margin-top: 80px;
   border-top: 1px solid var(--shadow-color);
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
@@ -55,7 +54,7 @@
   width: 40px;
   height: 40px;
   background: var(--accent-primary);
-  color: white;
+  color: var(--bg-primary); /* Changed from white to theme variable */
   border-radius: 50%;
   text-decoration: none;
   transition: all 0.3s ease;

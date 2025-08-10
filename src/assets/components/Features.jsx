@@ -18,35 +18,39 @@ const soon = [
 
 export default function Features() {
   return (
-    <section className="features-wrapper">
-      <h2 className="features-heading">Everything You Need<br />to Master Your Money</h2>
+    <>
+    <div className='features-container'>
+      <section className="features-wrapper">
+        <h2 className="features-heading">Everything You Need<br />to Master Your Money</h2>
 
-      {/* Core feature grid */}
-      <div className="feature-grid">
-        {core.map(({ icon, title, desc }) => (
-          <article key={title} className="feature-card">
-            <div className="feature-icon">{icon}</div>
-            <h3>{title}</h3>
-            <p>{desc}</p>
-          </article>
-        ))}
-      </div>
+        {/* Core feature grid */}
+        <div className="feature-grid">
+          {core.map(({ icon, title, desc }) => (
+            <article key={title} className="feature-card">
+              <div className="feature-icon">{icon}</div>
+              <h3>{title}</h3>
+              <p>{desc}</p>
+            </article>
+          ))}
+        </div>
 
-      {/* Divider */}
-      <div className="feature-divider">
-        <span>Upcoming Features</span>
-      </div>
+        {/* Divider */}
+        <div className="feature-divider">
+          <span>Upcoming Features</span>
+        </div>
 
-      {/* Future feature grid */}
-      <div className="feature-grid">
-        {soon.map(({ icon, title, desc }) => (
-          <article key={title} className="feature-card future">
-            <div className="feature-icon">{icon}</div>
-            <h3>{title}</h3>
-            <p>{desc}</p>
-          </article>
-        ))}
-      </div>
-    </section>
+        {/* Future feature grid */}
+        <div className="feature-grid">
+          {soon.map(({ icon, title, desc }) => (
+            <article key={title} className="feature-card future">
+              <div className="feature-icon">{icon}</div>
+              <h3>{title}</h3>
+              <p>{desc}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+    </div>
+    </>
   );
 }

@@ -1,21 +1,7 @@
 
-
-:root {
-  --accent-primary: #c09d3e;
-  --accent-secondary: #a07d30;
-  --bg-primary: #fcf6ef;
-  --bg-secondary: #fff8e1;
-  --text-primary: #604c39;
-  --text-secondary: #4a3b23;
-  --border-color: #c09d3e;
-  --shadow-color: rgba(96, 76, 57, 0.15);
-  --positive-green: #28a745;
-  --negative-red: #dc3545;
-}
-
 /* Dashboard Grid/Containers */
 .dashboard {
-  max-width: 1200px;
+  
   margin: auto;
   background: var(--bg-primary);
   color: var(--text-primary);
@@ -190,12 +176,12 @@
   padding: 7px 10px;
 }
 tr.alert, .budget-card.over-budget {
-  background: #ffe4e9;
+  background: var(--alert-bg);
   color: var(--negative-red);
 }
 .alert-banner {
   padding: 8px 12px;
-  background: #ffe4e9;
+  background: var(--alert-bg);
   border: 1px solid var(--negative-red);
   color: var(--negative-red);
   font-weight: 700;
@@ -257,10 +243,10 @@ tr.alert, .budget-card.over-budget {
   background: var(--accent-secondary);
 }
 .dash-form .cancel-btn {
-  background: #868686;
+  background: var(--cancel-grey);
   margin-left: 8px;
 }
-.dash-form .cancel-btn:hover { background: #727272; }
+.dash-form .cancel-btn:hover { background: var(--cancel-grey-hover); }
 
 /* Filters */
 .dash-filters {
@@ -310,8 +296,8 @@ tr.alert, .budget-card.over-budget {
   border-bottom: 1px solid var(--border-color);
   text-align: left;
 }
-.txn-row.income { background: #e2faef; }
-.txn-row.expense { background: #fae2e2; }
+.txn-row.income { background: var(--income-bg); }
+.txn-row.expense { background: var(--expense-bg); }
 .txn-table th {
   background: var(--bg-primary);
   color: var(--accent-primary);
@@ -349,4 +335,3 @@ tr.alert, .budget-card.over-budget {
   .dash-users, .dash-charts, .dash-budget, .dash-form, .dash-filters, .dash-txns { padding: 8px; }
   .ucard { width: 100%; }
 }
-

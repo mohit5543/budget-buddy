@@ -1,0 +1,48 @@
+:root {
+  --accent-primary: #c09d3e;
+  --accent-secondary: #a07d30;
+
+  --bg-primary: #fcf6ef;
+  --bg-secondary: #fff8e1;
+
+  --text-primary: #604c39;
+  --text-secondary: #4a3b23;
+
+  --border-color: #c09d3e;
+  --shadow-color: rgba(96, 76, 57, 0.15);
+
+  --positive-green: #28a745;
+  --negative-red: #dc3545;
+
+  /* Dashboard-specific colors */
+  --alert-bg: #ffe4e9; /* soft pink */
+  --cancel-grey: #868686;
+  --cancel-grey-hover: #727272;
+  --income-bg: #e2faef; /* mint green */
+  --expense-bg: #fae2e2; /* light red */
+}
+
+/* Dark Theme */
+html[data-theme="dark"] {
+  --accent-primary: #b38b2d; /* muted gold */
+  --accent-secondary: #8c6f25;
+
+  --bg-primary: #12100e; /* deep espresso */
+  --bg-secondary: #1e1a17; /* dark mocha */
+
+  --text-primary: #f0e6d2; /* warm beige */
+  --text-secondary: #cfc4af;
+
+  --border-color: #b38b2d;
+  --shadow-color: rgba(0, 0, 0, 0.5);
+
+  --positive-green: #4dd17b; /* softer neon green */
+  --negative-red: #ff6b6b; /* softer coral red */
+
+  /* Dashboard-specific colors for dark mode */
+  --alert-bg: #4b2b2f; /* muted dark pink */
+  --cancel-grey: #a0a0a0;
+  --cancel-grey-hover: #8a8a8a;
+  --income-bg: #264633; /* deep muted green */
+  --expense-bg: #4d2e2e; /* deep muted red */
+}

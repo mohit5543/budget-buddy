@@ -1,0 +1,115 @@
+/* Help.css */
+
+/* Wrapper */
+
+.help-container {
+  background: var(--bg-primary);
+  padding: 2rem 0;
+}
+
+.help-wrap {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 30px;
+  background: var(--bg-secondary);
+  border-radius: 12px;
+  box-shadow: 0 4px 20px var(--shadow-color);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  line-height: 1.6;
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+}
+
+/* Headings */
+.help-wrap h1 {
+  font-size: 2.2rem;
+  text-align: center;
+  color: var(--accent-primary);
+  margin-bottom: 20px;
+}
+
+.help-wrap h2 {
+  font-size: 1.5rem;
+  margin-top: 25px;
+  margin-bottom: 10px;
+  color: var(--accent-secondary);
+  border-left: 4px solid var(--accent-primary);
+  padding-left: 10px;
+}
+
+/* Search Input */
+.help-search {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  margin-bottom: 20px;
+  font-size: 1rem;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+.help-search:focus {
+  border-color: var(--accent-primary);
+}
+
+/* No results message */
+.help-no-results {
+  padding: 14px;
+  background: var(--bg-secondary);
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  color: var(--text-secondary);
+  text-align: center;
+}
+
+/* Article Card */
+.help-article {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  padding: 16px;
+  border-radius: 8px;
+  margin-bottom: 12px;
+  box-shadow: 0 2px 8px var(--shadow-color);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.help-article:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px var(--shadow-color);
+}
+
+.help-article h3 {
+  margin-top: 0;
+  margin-bottom: 8px;
+  color: var(--accent-secondary);
+}
+
+.help-article pre {
+  white-space: pre-wrap;
+  margin: 0;
+  font-family: inherit;
+  color: var(--text-secondary);
+}
+
+/* Contact Section */
+.help-contact {
+  margin-top: 24px;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+  .help-wrap {
+    padding: 20px;
+  }
+
+  .help-wrap h1 {
+    font-size: 1.8rem;
+  }
+
+  .help-wrap h2 {
+    font-size: 1.3rem;
+  }
+}

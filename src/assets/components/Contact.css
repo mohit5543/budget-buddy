@@ -1,9 +1,15 @@
+.contact-container {
+  background: var(--bg-primary);
+  padding: 2rem 0;
+}
+
 .contact-wrapper {
   max-width: 960px;
   margin: 90px auto;
   padding: 0 5vw;
   text-align: center;
   color: var(--text-primary);
+  background-color: var(--bg-primary);
 }
 
 .contact-heading {
@@ -28,7 +34,7 @@
 }
 
 .info-card {
-  background: var(--card-bg);
+  background: var(--bg-secondary);
   box-shadow: 0 2px 12px var(--shadow-color);
   border-radius: 14px;
   padding: 30px 26px;
@@ -36,7 +42,10 @@
   flex: 1 1 200px;
   transition: transform 0.3s ease;
 }
-.info-card:hover { transform: translateY(-6px); }
+.info-card:hover {
+  transform: translateY(-6px);
+}
+
 .info-icon {
   font-size: 2.2rem;
   color: var(--accent-primary);
@@ -45,7 +54,7 @@
 
 /* Form */
 .contact-form {
-  background: var(--card-bg);
+  background: var(--bg-secondary);
   padding: 40px 30px;
   border-radius: 16px;
   box-shadow: 0 3px 14px var(--shadow-color);
@@ -60,6 +69,7 @@
   margin-bottom: 10px;
   font-weight: 700;
   font-size: 1.4rem;
+  color: var(--text-primary);
 }
 
 .contact-form input,
@@ -75,7 +85,7 @@
 .contact-form button {
   align-self: center;
   background: var(--accent-primary);
-  color: #fff;
+  color: var(--bg-primary);
   border: none;
   border-radius: 25px;
   padding: 11px 34px;
@@ -89,5 +99,8 @@
 
 /* Responsive */
 @media (max-width: 768px) {
-  .contact-info-grid { flex-direction: column; gap: 24px; }
+  .contact-info-grid {
+    flex-direction: column;
+    gap: 24px;
+  }
 }

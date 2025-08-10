@@ -1,3 +1,9 @@
+/* theme.css */
+
+/* Light Theme (default) */
+
+
+
 .header {
   display: flex;
   justify-content: space-between;
@@ -7,6 +13,7 @@
   box-shadow: 0 2px 12px var(--shadow-color);
   position: relative;
   z-index: 1000;
+ 
 }
 
 .logo {
@@ -43,6 +50,26 @@
   color: var(--accent-primary);
   background: var(--bg-primary);
 }
+
+.hero-btn {
+  display: inline-block;
+  padding: 14px 36px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--white);
+  background: var(--primary);
+  border: none;
+  border-radius: 25px;
+  box-shadow: 0 2px 6px rgba(76,175,80,0.12);
+  cursor: pointer;
+  transition: background 0.2s, box-shadow 0.2s;
+  text-decoration: none;
+}
+.hero-btn.secondary {
+  background: var(--accent);
+}
+.hero-btn:hover { background: var(--gray); }
+.hero-btn.secondary:hover { background: var(--gray); }
 
 /* Theme Toggle Containers */
 .desktop-theme-toggle {

@@ -1,0 +1,88 @@
+/* Terms.css */
+
+/* Page Wrapper */
+.terms-container {
+  background: var(--bg-primary);
+  padding: 2rem 0;
+}
+
+.terms-wrap {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 30px;
+  background: var(--bg-secondary);
+  border-radius: 12px;
+  box-shadow: 0 4px 20px var(--shadow-color);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  line-height: 1.6;
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+}
+
+/* Headings */
+.terms-wrap h1 {
+  font-size: 2.2rem;
+  text-align: center;
+  color: var(--accent-primary);
+  margin-bottom: 10px;
+}
+
+.terms-wrap h2 {
+  font-size: 1.5rem;
+  margin-top: 25px;
+  margin-bottom: 10px;
+  color: var(--accent-secondary);
+  border-left: 4px solid var(--accent-primary);
+  padding-left: 10px;
+}
+
+/* Paragraphs */
+.terms-wrap p {
+  margin-bottom: 15px;
+  color: var(--text-secondary);
+}
+
+/* Lists */
+.terms-wrap ul {
+  margin-left: 20px;
+  padding-left: 15px;
+}
+
+.terms-wrap ul li {
+  margin-bottom: 8px;
+  list-style-type: disc;
+  color: var(--text-primary);
+}
+
+/* Date styling */
+.terms-wrap p:first-of-type {
+  font-style: italic;
+  color: var(--accent-secondary);
+}
+
+/* Links */
+.terms-wrap a {
+  color: var(--accent-primary);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.terms-wrap a:hover {
+  text-decoration: underline;
+  color: var(--accent-secondary);
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+  .terms-wrap {
+    padding: 20px;
+  }
+
+  .terms-wrap h1 {
+    font-size: 1.8rem;
+  }
+
+  .terms-wrap h2 {
+    font-size: 1.3rem;
+  }
+}

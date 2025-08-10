@@ -1,0 +1,29 @@
+/* theme.css */
+
+/* Light Theme (default) */
+:root {
+  --accent-primary: #c09d3e;
+  --accent-secondary: #a07d30;
+  --bg-primary: #fcf6ef;
+  --bg-secondary: #fff8e1;
+  --text-primary: #604c39;
+  --text-secondary: #4a3b23;
+  --border-color: #c09d3e;
+  --shadow-color: rgba(96, 76, 57, 0.15);
+  --positive-green: #28a745;
+  --negative-red: #dc3545;
+}
+
+/* Dark Theme */
+.dark {
+  --accent-primary: #e0c166;
+  --accent-secondary: #c7a94d;
+  --bg-primary: #1f1b16;
+  --bg-secondary: #2c2620;
+  --text-primary: #f1e8d8;
+  --text-secondary: #cbbf9d;
+  --border-color: #e0c166;
+  --shadow-color: rgba(0, 0, 0, 0.5);
+  --positive-green: #5cd67f;
+  --negative-red: #ff6b81;
+}
